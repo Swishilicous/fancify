@@ -22,6 +22,18 @@ export default memo(({ getSetting, updateSetting, toggleSetting }) => {
     >
       Toggle appending a word.
     </SwitchItem>
+    <TextInput
+      value={getSetting('clapchar')}
+      onChange={value => {updateSetting('clapchar', value)}}
+    >
+      Text For clapify (ex. this 😭 plugin 😭 is 😭 super 😭 sad)
+    </TextInput>
+    <SwitchItem
+      value={getSetting('clapchartoggle')}
+      onChange={value => {updateSetting('clapchartoggle', value)}}
+    >
+      Toggle clapify manually.
+    </SwitchItem>
     </div>
   );
 });
