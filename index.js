@@ -1,9 +1,16 @@
 import { Plugin } from '@vizality/entities';
 import { getModule } from '@vizality/webpack';
 import { patch, unpatch } from '@vizality/patcher'
+import util from '@vizality/util'; 
+import FancyText from "./fancytext.json"
 
 
 const Settings = require('./components/Settings')
+
+
+
+// TODO: refactor to all separate files
+
 
 export default class vztm extends Plugin {
   async start () {
@@ -56,7 +63,29 @@ export default class vztm extends Plugin {
       executor: async (args) => {
         return {
           send: true,
-          result: args
+          result: args.join(' ').toLowerCase().split('').map(c => c.match(/[a-z]/i) ? `:regional_indicator_${c}:` : c).join('') // Thanks swish :)
+        }
+      }
+    })
+    vizality.api.commands.registerCommand({
+      command: "owoify",
+      description: 'Makes your cute and weird.',
+      usage: '{c} text',
+      executor: async (args) => {
+        return {
+          send: true,
+          result: util.string.owoifyText(args.join(" "))
+        }
+      }
+    })
+    vizality.api.commands.registerCommand({
+      command: "fancytext",
+      description: 'Makes your message 𝐹𝒶𝓃𝒸𝓎.',
+      usage: '{c} text',
+      executor: async (args) => {
+        return {
+          send: true,
+          result: args.join('       ').split('').map(c => c in FancyText ? FancyText[c] : c).join('') // Again thanks swish :))))
         }
       }
     })
@@ -88,6 +117,8 @@ export default class vztm extends Plugin {
     vizality.api.commands.unregisterCommand('clapify')
     vizality.api.commands.unregisterCommand('toggle-clapify')
     vizality.api.commands.unregisterCommand('bigtext')
+    vizality.api.commands.unregisterCommand('owoify')
+    vizality.api.commands.unregisterCommand('fancytext')
     unpatch('message-send')
   }
 }
