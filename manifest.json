@@ -1,7 +1,7 @@
 {
     "name": "𝓯𝓪𝓷𝓬𝓲𝓯𝔂",
-    "version": "1.0.0",
-    "description": "Fun string commands!",
+    "version": "1.0.1",
+    "description": "Make your chat fancier!",
     "author": "MoltenCore with some help from Swishilicous",
     "license": "MIT",
     "icon": "./logo.png"
