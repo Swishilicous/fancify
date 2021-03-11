@@ -69,7 +69,7 @@ export default class vztm extends Plugin {
       executor: async (args) => {
         return {
           send: true,
-          result: args.join("  ").split("").map(c => c in FancyText ? FancyText[c] : c).join("") // Again thanks swish :))))
+          result: args.join("  ").split("").map(c => c in FancyText ? FancyText[c] : c).join("") // Again thanks swish :)))) 
         }
       }
     })
@@ -81,6 +81,18 @@ export default class vztm extends Plugin {
         return {
           send: true,
           result: args.join(" ").replace(/th/gi, "þ") // Idea by vax or cute as they call themselves
+        }
+      }
+    })
+    vizality.api.commands.registerCommand({
+      command: "toggle-thornify",
+      description: "Toggles þornify",
+      usage: "{c} text",
+      executor: async (args) => {
+        this.settings.set("thornifytoggle", !this.settings.get("thornifytoggle"))
+        return {
+          send: false,
+          result: `Toggled thornify to ${this.settings.get("thornifytoggle") ? "on" : "off"}` 
         }
       }
     })
@@ -102,6 +114,9 @@ export default class vztm extends Plugin {
           let char = this.settings.get("clapchar", "👏")
           text = text.replace(/ /g, ` ${char} `)
         }
+        if (this.settings.get("thornifytoggle") == true) {
+          text = text.replace(/th/gi, "þ")
+        }
         
         args[1].content = text
       	return args
@@ -115,6 +130,8 @@ export default class vztm extends Plugin {
     vizality.api.commands.unregisterCommand("bigtext")
     vizality.api.commands.unregisterCommand("owoify")
     vizality.api.commands.unregisterCommand("fancytext")
+    vizality.api.commands.unregisterCommand("thornify")
+    vizality.api.commands.unregisterCommand("toggle-thornify")
     unpatch("message-send")
   }
 }
