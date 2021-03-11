@@ -4,6 +4,7 @@ import { patch, unpatch } from "@vizality/patcher"
 import util from "@vizality/util"; 
 
 import FancyText from "./fancytext.json"
+import owoify from "./owoify"
 
 const Settings = require("./components/Settings")
 
@@ -64,12 +65,12 @@ export default class vztm extends Plugin {
     })
     vizality.api.commands.registerCommand({
       command: "owoify",
-      description: "Makes your cute and weird.",
+      description: "Makes you cute and weird.",
       usage: "{c} text",
       executor: async (args) => {
         return {
           send: true,
-          result: util.string.owoifyText(args.join(" "))
+          result: owoify(args.join(" "))
         }
       }
     })
