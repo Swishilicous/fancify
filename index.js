@@ -10,7 +10,7 @@ const Settings = require("./components/Settings")
 
 export default class vztm extends Plugin {
   async start () {
-		this.registerSettings(Settings)
+    this.registerSettings(Settings)
     vizality.api.commands.registerCommand({
       command: "tm-er",
       description: "Toggles tm-er.",
@@ -138,7 +138,7 @@ export default class vztm extends Plugin {
       executor: async (args) => {
         return {
           send: true,
-          result: `<@764495937095204895> is a furry.` 
+          result: `<@764495937095204895> is a cutie i guess (maybe a furry).` 
         }
       }
     })
