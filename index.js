@@ -75,6 +75,18 @@ export default class vztm extends Plugin {
       }
     })
     vizality.api.commands.registerCommand({
+      command: "toggle-owoify",
+      description: "Toggles owoify",
+      usage: "{c} text",
+      executor: async (args) => {
+        this.settings.set("owoifytoggle", !this.settings.get("owoifytoggle"))
+        return {
+          send: false,
+          result: `Toggled owoify to ${this.settings.get("owoifytoggle") ? "on" : "off"}` 
+        }
+      }
+    })
+    vizality.api.commands.registerCommand({
       command: "fancytext",
       description: "Makes your message 𝐹𝒶𝓃𝒸𝓎.",
       usage: "{c} text",
@@ -131,6 +143,7 @@ export default class vztm extends Plugin {
         }
       }
     })
+    if (this.settings.get("cutieig")) {
     vizality.api.commands.registerCommand({
       command: "cutie",
       description: "Yes.",
@@ -142,6 +155,7 @@ export default class vztm extends Plugin {
         }
       }
     })
+  }
     
     const MessageEvents = await getModule("sendMessage")
 		  patch("message-send", MessageEvents, "sendMessage", (args) => {
@@ -165,6 +179,9 @@ export default class vztm extends Plugin {
         if (this.settings.get("togglessify") == true) {
           text = text.replace(/ss/g, "ß")
         }
+        if (this.settings.get("owoifytoggle") == true) {
+          text = owoify(text)
+        }
         
         args[1].content = text
       	return args
@@ -177,12 +194,15 @@ export default class vztm extends Plugin {
     vizality.api.commands.unregisterCommand("toggle-clapify")
     vizality.api.commands.unregisterCommand("bigtext")
     vizality.api.commands.unregisterCommand("owoify")
+    vizality.api.commands.unregisterCommand("toggle-owoify")
     vizality.api.commands.unregisterCommand("fancytext")
     vizality.api.commands.unregisterCommand("thornify")
     vizality.api.commands.unregisterCommand("toggle-thornify")
     vizality.api.commands.unregisterCommand("ssify")
     vizality.api.commands.unregisterCommand("toggle-ssify")
+    if (this.settings.get("cutieig")) {
     vizality.api.commands.unregisterCommand("cutie")
+    }
     unpatch("message-send")
   }
 }

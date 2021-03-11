@@ -1,8 +1,8 @@
 module.exports = function (text) {
   try {
-    const stutterChance = 0.1;
-    const prefixChance = 0.05;
-    const suffixChance = 0.15;
+    const stutterChance = 0.6;
+    const prefixChance = 1;
+    const suffixChance = 1;
     const words = {
       love: 'wuv',
       mr: 'mistuh',
