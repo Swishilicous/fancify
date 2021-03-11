@@ -89,6 +89,18 @@ export default class vztm extends Plugin {
         }
       }
     })
+    vizality.api.commands.registerCommand({
+      command: "thornify",
+      description: 'Makes your message þornified.',
+      usage: '{c} text',
+      executor: async (args) => {
+        return {
+          send: true,
+          result: args.join(" ").replace(/th/gi, "þ")
+        }
+      }
+    })
+    
     
 
     const MessageEvents = await getModule('sendMessage')
