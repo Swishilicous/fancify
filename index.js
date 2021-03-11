@@ -96,7 +96,7 @@ export default class vztm extends Plugin {
       executor: async (args) => {
         return {
           send: true,
-          result: args.join(" ").replace(/th/gi, "þ")
+          result: args.join(" ").replace(/th/gi, "þ") // Idea by vax or cute as they call themselves
         }
       }
     })
