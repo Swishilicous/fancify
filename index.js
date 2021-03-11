@@ -1,7 +1,6 @@
 import { Plugin } from "@vizality/entities";
 import { getModule } from "@vizality/webpack";
 import { patch, unpatch } from "@vizality/patcher"
-import util from "@vizality/util"; 
 
 import FancyText from "./fancytext.json"
 import owoify from "./owoify"
@@ -143,7 +142,6 @@ export default class vztm extends Plugin {
         }
       }
     })
-    if (this.settings.get("cutieig")) {
     vizality.api.commands.registerCommand({
       command: "cutie",
       description: "Yes.",
@@ -155,7 +153,6 @@ export default class vztm extends Plugin {
         }
       }
     })
-  }
     
     const MessageEvents = await getModule("sendMessage")
 		  patch("message-send", MessageEvents, "sendMessage", (args) => {
@@ -200,9 +197,7 @@ export default class vztm extends Plugin {
     vizality.api.commands.unregisterCommand("toggle-thornify")
     vizality.api.commands.unregisterCommand("ssify")
     vizality.api.commands.unregisterCommand("toggle-ssify")
-    if (this.settings.get("cutieig")) {
     vizality.api.commands.unregisterCommand("cutie")
-    }
     unpatch("message-send")
   }
 }
