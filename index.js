@@ -4,14 +4,25 @@ import { patch, unpatch } from "@vizality/patcher"
 import util from "@vizality/util"; 
 
 import FancyText from "./fancytext.json"
-import tmer from "./modules/tm-er.js"
 
 const Settings = require("./components/Settings")
 
 export default class vztm extends Plugin {
   async start () {
 		this.registerSettings(Settings)
-    vizality.api.commands.registerCommand(tmer)
+    vizality.api.commands.registerCommand({
+      command: "tm-er",
+      description: "Toggles tm-er.",
+      usage: "{c} text",
+      executor: async (args) => {
+        // TODO: Send a toast
+        this.settings.set("tmwordtoggle", !this.settings.get("tmwordtoggle"))
+        return {
+          send: false,
+          result: `Switched tm-er to ${this.settings.get("tmwordtoggle")}`// TODO: Format to make it be on/off
+        }
+      }
+    })
 
 
     vizality.api.commands.registerCommand({
