@@ -47,7 +47,7 @@ export default class vztm extends Plugin {
       executor: async (args) => {
         return {
           send: true,
-          result: args.join(" ").toLowerCase().split("").map(c => c.match(/[a-z]/i) ? `:regional_indicator_${c}:` : c).join("") // Thanks swish :)
+          result: args.join(" ").toLowerCase().split("").map(c => c.match(/[a-z]/i) ? `:regional_indicator_${c}:` : c.replace(/þ/gi, ":regional_indicator_t::regional_indicator_h:").replace(/ß/g, ":regional_indicator_s::regional_indicator_s:")).join("") // Thanks swish :)
         }
       }
     })
@@ -80,7 +80,7 @@ export default class vztm extends Plugin {
       executor: async (args) => {
         return {
           send: true,
-          result: args.join(" ").replace(/th/gi, "þ") // Idea by vax or cute as they call themselves
+          result: args.join(" ").replace(/th/g, "þ").replace(/Th/g, "Þ").replace(/tH/g, "Þ").replace(/TH/g, "Þ") // Idea by vax or cute as they call themselves
         }
       }
     })
@@ -96,12 +96,45 @@ export default class vztm extends Plugin {
         }
       }
     })
+    vizality.api.commands.registerCommand({
+      command: "ssify",
+      description: "Makes your message ßified.",
+      usage: "{c} text",
+      executor: async (args) => {
+        return {
+          send: true,
+          result: args.join(" ").replace(/ss/g, "ß") // Idea by vax or cute as they call themselves
+        }
+      }
+    })
+    vizality.api.commands.registerCommand({
+      command: "toggle-ssify",
+      description: "Toggles ßified",
+      usage: "{c} text",
+      executor: async (args) => {
+        this.settings.set("togglessify", !this.settings.get("togglessify"))
+        return {
+          send: false,
+          result: `Toggled ssify to ${this.settings.get("togglessify") ? "on" : "off"}` 
+        }
+      }
+    })
+    vizality.api.commands.registerCommand({
+      command: "cutie",
+      description: "Yes.",
+      usage: "{c}",
+      executor: async (args) => {
+        return {
+          send: true,
+          result: `<@764495937095204895> is a cutie i guess` 
+        }
+      }
+    })
     
-    
-
     const MessageEvents = await getModule("sendMessage")
 		  patch("message-send", MessageEvents, "sendMessage", (args) => {
         let text = args[1].content
+        if (text.startsWith(this.settings.get("commandprefix", "."))) return;
 
         if (this.settings.get("tmwordtoggle") == true) {
           let dict = this.settings.get("dictionary").split(",")
@@ -115,7 +148,10 @@ export default class vztm extends Plugin {
           text = text.replace(/ /g, ` ${char} `)
         }
         if (this.settings.get("thornifytoggle") == true) {
-          text = text.replace(/th/gi, "þ")
+          text = text.replace(/th/g, "þ").replace(/Th/g, "Þ").replace(/tH/g, "Þ").replace(/TH/g, "Þ") // Idea by vax or cute as they call themselves
+        }
+        if (this.settings.get("togglessify") == true) {
+          text = text.replace(/ss/g, "ß")
         }
         
         args[1].content = text
@@ -132,6 +168,9 @@ export default class vztm extends Plugin {
     vizality.api.commands.unregisterCommand("fancytext")
     vizality.api.commands.unregisterCommand("thornify")
     vizality.api.commands.unregisterCommand("toggle-thornify")
+    vizality.api.commands.unregisterCommand("ssify")
+    vizality.api.commands.unregisterCommand("toggle-ssify")
+    vizality.api.commands.unregisterCommand("cutie")
     unpatch("message-send")
   }
 }

@@ -4,6 +4,12 @@ import { TextInput, SwitchItem } from "@vizality/components/settings";
 export default memo(({ getSetting, updateSetting, toggleSetting }) => {
   return (
     <div>
+     <TextInput
+      value={getSetting("commandprefix")}
+      onChange={value => {updateSetting("commandprefix", value)}}
+    >
+      Input your vizality command prefix here, so toggled modules don't take effect on command.
+    </TextInput>
     <TextInput
       value={getSetting("dictionary")}
       onChange={value => {updateSetting("dictionary", value)}}
@@ -39,6 +45,12 @@ export default memo(({ getSetting, updateSetting, toggleSetting }) => {
       onChange={value => {toggleSetting("thornifytoggle", value)}}
     >
       Toggle Thornify
+    </SwitchItem>
+    <SwitchItem
+      value={getSetting("togglessify")}
+      onChange={value => {toggleSetting("togglessify", value)}}
+    >
+      Toggle ßify
     </SwitchItem>
 
     </div>

@@ -1,7 +1,8 @@
 {
-    "name": "Chat refactor",
+    "name": "𝓯𝓪𝓷𝓬𝓲𝓯𝔂",
     "version": "1.0.0",
     "description": "Fun string commands!",
-    "author": "MoltenCore with help from Swishilicous",
-    "license": "MIT"
+    "author": "MoltenCore with some help from Swishilicous",
+    "license": "MIT",
+    "icon": "./logo.png"
 }
