@@ -58,7 +58,16 @@ export default class vztm extends Plugin {
       executor: async (args) => {
         return {
           send: true,
-          result: args.join(" ").toLowerCase().split("").map(c => c.match(/[a-z]/i) ? `:regional_indicator_${c}:` : c.replace(/þ/gi, ":regional_indicator_t::regional_indicator_h:").replace(/ß/g, ":regional_indicator_s::regional_indicator_s:")).join("") // Thanks swish :)
+          result: args.join(" ").toLowerCase().split("")
+    .map(c => c.match(/[a-z]/i) 
+        ? `:regional_indicator_${c}:` 
+        : c === "þ" 
+            ? ":regional_indicator_t::regional_indicator_h:" 
+           : c === "ß" 
+               ? ":regional_indicator_s::regional_indicator_s:"
+               : c)
+    .join("")
+// Thanks swish :)
         }
       }
     })
