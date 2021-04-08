@@ -195,7 +195,6 @@ export default class vztm extends Plugin {
     vizality.api.commands.unregisterCommand("toggle-thornify")
     vizality.api.commands.unregisterCommand("ssify")
     vizality.api.commands.unregisterCommand("toggle-ssify")
-    vizality.api.commands.unregisterCommand("cutie")
     unpatch("message-send")
   }
 }
