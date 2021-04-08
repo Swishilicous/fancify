@@ -151,17 +151,6 @@ export default class vztm extends Plugin {
         }
       }
     })
-    vizality.api.commands.registerCommand({
-      command: "cutie",
-      description: "Yes.",
-      usage: "{c}",
-      executor: async (args) => {
-        return {
-          send: true,
-          result: `<@764495937095204895> is a cutie i guess (maybe a furry).` 
-        }
-      }
-    })
     
     const MessageEvents = await getModule("sendMessage")
 		  patch("message-send", MessageEvents, "sendMessage", (args) => {
