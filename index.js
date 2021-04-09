@@ -8,7 +8,7 @@ import owoify from "./owoify"
 const Settings = require("./components/Settings")
 
 export default class vztm extends Plugin {
-  async start () {
+  async start() {
     this.registerSettings(Settings)
     vizality.api.commands.registerCommand({
       command: "tm-er",
@@ -59,15 +59,15 @@ export default class vztm extends Plugin {
         return {
           send: true,
           result: args.join(" ").toLowerCase().split("")
-    .map(c => c.match(/[a-z]/i) 
-        ? `:regional_indicator_${c}:` 
-        : c === "þ" 
-            ? ":regional_indicator_t::regional_indicator_h:" 
-           : c === "ß" 
-               ? ":regional_indicator_s::regional_indicator_s:"
-               : c)
-    .join("")
-// Thanks swish :)
+            .map(c => c.match(/[a-z]/i)
+              ? `:regional_indicator_${c}:`
+              : c === "þ"
+                ? ":regional_indicator_t::regional_indicator_h:"
+                : c === "ß"
+                  ? ":regional_indicator_s::regional_indicator_s:"
+                  : c)
+            .join("")
+          // Thanks swish :)
         }
       }
     })
@@ -90,7 +90,7 @@ export default class vztm extends Plugin {
         this.settings.set("owoifytoggle", !this.settings.get("owoifytoggle"))
         return {
           send: false,
-          result: `Toggled owoify to ${this.settings.get("owoifytoggle") ? "on" : "off"}` 
+          result: `Toggled owoify to ${this.settings.get("owoifytoggle") ? "on" : "off"}`
         }
       }
     })
@@ -124,7 +124,7 @@ export default class vztm extends Plugin {
         this.settings.set("thornifytoggle", !this.settings.get("thornifytoggle"))
         return {
           send: false,
-          result: `Toggled thornify to ${this.settings.get("thornifytoggle") ? "on" : "off"}` 
+          result: `Toggled thornify to ${this.settings.get("thornifytoggle") ? "on" : "off"}`
         }
       }
     })
@@ -147,43 +147,43 @@ export default class vztm extends Plugin {
         this.settings.set("togglessify", !this.settings.get("togglessify"))
         return {
           send: false,
-          result: `Toggled ssify to ${this.settings.get("togglessify") ? "on" : "off"}` 
+          result: `Toggled ssify to ${this.settings.get("togglessify") ? "on" : "off"}`
         }
       }
     })
-    
-    const MessageEvents = await getModule("sendMessage")
-		  patch("message-send", MessageEvents, "sendMessage", (args) => {
-        let text = args[1].content
-        if (text.startsWith(this.settings.get("commandprefix", "."))) return;
 
-        if (this.settings.get("tmwordtoggle") == true) {
-          let dict = this.settings.get("dictionary").split(",")
-          let appendWord = this.settings.get("tmword", "™")
-          dict.forEach(element => {
-            text = text.replace(element, `${element}${appendWord}`)
-          });
-        }
-        if (this.settings.get("clapchartoggle") == true) {
-          let char = this.settings.get("clapchar", "👏")
-          text = text.replace(/ /g, ` ${char} `)
-        }
-        if (this.settings.get("thornifytoggle") == true) {
-          text = text.replace(/th/g, "þ").replace(/Th/g, "Þ").replace(/tH/g, "Þ").replace(/TH/g, "Þ") // Idea by vax or cute as they call themselves
-        }
-        if (this.settings.get("togglessify") == true) {
-          text = text.replace(/ss/g, "ß")
-        }
-        if (this.settings.get("owoifytoggle") == true) {
-          text = owoify(text)
-        }
-        
-        args[1].content = text
-      	return args
+    const MessageEvents = await getModule("sendMessage")
+    patch("message-send", MessageEvents, "sendMessage", (args) => {
+      let text = args[1].content
+      if (text.startsWith(this.settings.get("commandprefix", "."))) return;
+
+      if (this.settings.get("tmwordtoggle") == true) {
+        let dict = this.settings.get("dictionary").split(",")
+        let appendWord = this.settings.get("tmword", "™")
+        dict.forEach(element => {
+          text = text.replace(element, `${element}${appendWord}`)
+        });
+      }
+      if (this.settings.get("clapchartoggle") == true) {
+        let char = this.settings.get("clapchar", "👏")
+        text = text.replace(/ /g, ` ${char} `)
+      }
+      if (this.settings.get("thornifytoggle") == true) {
+        text = text.replace(/th/g, "þ").replace(/Th/g, "Þ").replace(/tH/g, "Þ").replace(/TH/g, "Þ") // Idea by vax or cute as they call themselves
+      }
+      if (this.settings.get("togglessify") == true) {
+        text = text.replace(/ss/g, "ß")
+      }
+      if (this.settings.get("owoifytoggle") == true) {
+        text = owoify(text)
+      }
+
+      args[1].content = text
+      return args
     }, true)
 
   }
-  stop () {
+  stop() {
     vizality.api.commands.unregisterCommand("tm-er")
     vizality.api.commands.unregisterCommand("clapify")
     vizality.api.commands.unregisterCommand("toggle-clapify")
